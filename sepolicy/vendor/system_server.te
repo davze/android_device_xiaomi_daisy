@@ -27,5 +27,7 @@ allow system_server sysfs:file { getattr };
 
 allow system_server default_android_hwservice:hwservice_manager { find };
 allow system_server vendor_file:file { getattr open read };
-
 allow system_server adb_data_file:file { getattr open read };
+
+# Allow system_server to set persist_camera_prop
+get_prop(system_server, persist_camera_prop)

@@ -15,9 +15,9 @@
 #
 
 $(call inherit-product, vendor/xiaomi/daisy/daisy-vendor.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk)
-$(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
+# Setup dalvik vm configs
+$(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 
 ifeq ($(CURRENT_BUILD_TYPE),gapps)
     $(call inherit-product, vendor/google-customization/config.mk)
@@ -87,11 +87,7 @@ PRODUCT_PACKAGES += \
     com.dsi.ant.antradio_library \
     libantradio
 
-# APEX
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/ld.config.txt:$(TARGET_COPY_OUT_SYSTEM)/etc/swcodec/ld.config.txt
-
-# A/B
+## A/B
 AB_OTA_UPDATER := true
 
 AB_OTA_PARTITIONS += \
@@ -110,8 +106,22 @@ PRODUCT_PACKAGES += \
 
 # Boot control
 PRODUCT_PACKAGES += \
+    android.hardware.boot@1.0-impl \
+    android.hardware.boot@1.0-service \
+    bootctrl.msm8953 \
     android.hardware.boot@1.0-impl.recovery \
     bootctrl.msm8953.recovery
+
+# Boot control debug
+PRODUCT_PACKAGES_DEBUG += \
+    bootctl
+
+# Update engine
+PRODUCT_PACKAGES += \
+    update_engine \
+    update_engine_sideload \
+    update_verifier \
+    update_engine_client
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -196,8 +206,8 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-	vendor.display.config@1.9 \
-	vendor.display.config@1.9_vendor \
+    vendor.display.config@1.9 \
+    vendor.display.config@1.9_vendor \
     copybit.msm8953 \
     gralloc.msm8953 \
     hwcomposer.msm8953 \
@@ -210,8 +220,8 @@ PRODUCT_PACKAGES += \
 
 # Device-specific settings
 PRODUCT_PACKAGES += \
-    phh_Doze \
-    XiaomiParts
+    XiaomiParts \
+    XiaomiDoze
 	
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/me.phh.treble.app.xml:system/etc/permissions/me.phh.treble.app.xml
@@ -272,10 +282,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ims-ext-common \
     ims_ext_common.xml
-	
-# init.d support
-#PRODUCT_PACKAGES += \
-#    sysinit
 
 # Input
 PRODUCT_COPY_FILES += \
@@ -330,6 +336,16 @@ PRODUCT_PACKAGES += \
     netutils-wrapper-1.0 \
     android.system.net.netd@1.0 \
     libandroid_net
+
+# Nice stuff
+PRODUCT_PACKAGES += \
+    additional_repos \
+    AuroraServices \
+    AuroraStore \
+    FDroid \
+    FDroidPrivilegedExtension \
+    MatLog \
+    Phonograph
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -390,11 +406,6 @@ PRODUCT_PACKAGES += \
 # RenderScript HAL
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
-	
-# Resetprop (thx to phhusson)
-#PRODUCT_PACKAGES += \
-#    resetprop \
-#	cts_pass.sh
 
 #PRODUCT_COPY_FILES += \
 #    $(LOCAL_PATH)/cts_pass.rc:system/etc/init/cts_pass.rc
@@ -442,6 +453,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf \
     $(LOCAL_PATH)/configs/sensors/sensor_def_qcomdev.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/sensor_def_qcomdev.conf
+
+# Soong
+PRODUCT_SOONG_NAMESPACES += \
+    device/xiaomi/daisy
 
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \

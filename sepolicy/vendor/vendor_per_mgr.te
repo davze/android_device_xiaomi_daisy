@@ -1,2 +1,1 @@
-allow vendor_per_mgr sysfs:file { open read };
 allow vendor_per_mgr vfat:file { open read };

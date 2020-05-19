@@ -1,3 +1,4 @@
+allow platform_app time_daemon:unix_stream_socket connectto;
 allow platform_app bluetooth_prop:file read;
 allow platform_app bootloader_boot_reason_prop:file read;
 allow platform_app boottime_prop:file read;
@@ -14,6 +15,4 @@ allow platform_app ctl_interface_stop_prop:file { read };
 allow platform_app fs_bpf:dir search;
 allow platform_app sysfs_kgsl:dir search;
 allow platform_app sysfs_kgsl:lnk_file read;
-allow platform_app sysfs_kgsl:file { getattr open read };
-allow platform_app time_daemon:unix_stream_socket connectto;
-allow platform_app vendor_file:file { getattr open read };
+allow platform_app system_app_data_file:dir getattr;

@@ -17,5 +17,14 @@ allow system_app sysfs_zram:dir { search };
 allow system_app sysfs_zram:file { getattr open read };
 allow system_app sysfs_thermal:file { write };
 allow system_app sysfs_kgsl:lnk_file read;
-allow system_app fm_prop:property_service set;
-allow system_app vendor_file:file { execute getattr open read };
+# FM radio needs to set fm properties
+set_prop(system_app, fm_prop) 
+allow system_app sysfs_zram:dir search;
+allow system_app kcal_dev:file rw_file_perms;
+allow system_app kcal_dev:dir search;
+allow system_app sysfs_fpsinfo:file rw_file_perms;
+allow system_app sysfs_zram:file read;
+allow system_app wificond:binder call;
+allow system_app sysfs_leds:dir search;
+allow system_app sysfs_torch:file { open getattr write };
+allow system_app sysfs_fastcharge:file { open read getattr write };

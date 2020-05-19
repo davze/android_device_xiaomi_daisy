@@ -1,3 +1,4 @@
+allow untrusted_app theme_prop:file { getattr open read };
 allow untrusted_app bluetooth_prop:file read;
 allow untrusted_app bootloader_boot_reason_prop:file read;
 allow untrusted_app proc_vmstat:file read;
@@ -32,7 +33,5 @@ allow untrusted_app hwservice_contexts_file:file { getattr };
 allow untrusted_app mac_perms_file:file { getattr };
 allow untrusted_app firmware_file:dir { read };
 allow untrusted_app firmware_file:dir { search };
-allow untrusted_app persist_camera_prop:file { getattr open read };
-allow untrusted_app sysfs_kgsl:dir search;
-allow untrusted_app sysfs_kgsl:file { open read };
 allow untrusted_app camera_prop:file { getattr open read };
+allow untrusted_app persist_camera_prop:file { getattr open };

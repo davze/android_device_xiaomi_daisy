@@ -1,17 +1,11 @@
 # Camera
 persist.camera.debug.logfile                                  u:object_r:persist_camera_prop:s0
-camera.dual.mode           u:object_r:camera_prop:s0
-persist.camera.            u:object_r:camera_prop:s0
-
 
 # Fingerprint
 persist.sys.fp.                                               u:object_r:fingerprint_prop:s0
 persist.vendor.sys.fp.                                        u:object_r:fingerprint_prop:s0
 ro.boot.fp.                                                   u:object_r:fingerprint_prop:s0
 ro.boot.fpsensor                                              u:object_r:fingerprint_prop:s0
-sys.fp.goodix					u:object_r:fingerprint_prop:s0
-sys.fp.vendor					u:object_r:fingerprint_prop:s0
-
 
 # Mlipay
 persist.vendor.sys.pay.ifaa                                   u:object_r:ifaa_prop:s0
@@ -21,6 +15,12 @@ persist.net.doxlat                                            u:object_r:vendor_
 
 # Post Boot
 sys.post_boot.parsed                                          u:object_r:vendor_mpctl_prop:s0
+
+# Power HAL
+vendor.powerhal.audio                   u:object_r:power_prop:s0
+vendor.powerhal.init                    u:object_r:power_prop:s0
+vendor.powerhal.rendering               u:object_r:power_prop:s0
+vendor.powerhal.state                   u:object_r:power_prop:s0
 
 # Radio
 sys.fake_bs_flag0                                             u:object_r:system_radio_prop:s0
@@ -41,7 +41,3 @@ sys.thermal.                                                  u:object_r:thermal
 
 # Dirac
 persist.audio.dirac.                                          u:object_r:dirac_prop:s0
-
-# Wcnss
-vendor.wlan.driver.ath          u:object_r:wifi_prop:s0
-vendor.wlan.driver.config       u:object_r:wifi_prop:s0
