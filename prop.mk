@@ -84,6 +84,7 @@ persist.vendor.camera.stats.test=5 \
 persist.vendor.qti.telephony.vt_cam_interface=2 \
 vidc.enc.dcvs.extra-buff-count=2 \
 vendor.camera.lowpower.record.enable=1 \
+persist.vendor.camera.HAL3.enabled=1 \
 vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaqin.factory,org.lineageos.snap \
 vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
 vendor.camera.hal1.packagelist=com.skype.raider,com.google.android.talk,com.whatsapp,com.android.camera2 \
