@@ -13,7 +13,6 @@ acdb_id_para_version=QL1715-Audiopara-V03-20180302 \
 audio.chk.cal.us=0 \
 audio.chk.cal.spk=0 \
 af.fast_track_multiplier=1 \
-audio.deep_buffer.media=true \
 audio.offload.disable=true \
 audio.offload.min.duration.secs=30 \
 audio.offload.video=true \
@@ -68,6 +67,10 @@ persist.vendor.btstack.enable.splita2dp=false
 PRODUCT_PROPERTY_OVERRIDES += \
 sys.vendor.shutdown.waittime=500
 
+# camera hal buffer management
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.camera.managebuffer.enable=1
+
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
 persist.vendor.camera.display.lmax=1280x720 \
@@ -84,10 +87,61 @@ persist.vendor.camera.stats.test=5 \
 persist.vendor.qti.telephony.vt_cam_interface=2 \
 vidc.enc.dcvs.extra-buff-count=2 \
 vendor.camera.lowpower.record.enable=1 \
+camera.disable_zsl_mode=true 
+
+#Additional prop camera
+PRODUCT_PROPERTY_OVERRIDES += \
 persist.vendor.camera.HAL3.enabled=1 \
-vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaqin.factory,org.lineageos.snap \
-vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
-vendor.camera.hal1.packagelist=com.skype.raider,com.google.android.talk,com.whatsapp,com.android.camera2 \
+persist.vendor.camera.eis.enable=1 \
+persist.camera.HAL3.enabled=1 \
+persist.camera.eis.enable=1 \
+persist.camera.max.previewfps=60 \
+persist.vendor.camera.max.previewfps=60 
+
+# AF wait AEC settle count
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.config.calibration_cad=/vendor/etc/calibration_cad.xml \
+persist.bokeh.switch.lux=290 \
+persist.camera.auxswitch.threshold=330 \
+persist.camera.mainswitch.threshold=419 \
+persist.vendor.camera.preview.ubwc=0 \
+persist.vendor.camera.stats.test=0 \
+persist.vendor.camera.depth.focus.cb=0 \
+persist.vendor.camera.isp.clock.optmz=0 \
+persist.vendor.camera.linkpreview=0 \
+persist.vendor.camera.isp.turbo=1 \
+persist.vendor.camera.awb.sync=2 \
+persist.vendor.camera.expose.aux=1 \
+persist.camera.is_type=4 \
+persist.vendor.camera.is_type=4 \
+persist.camera.is_mode=4 \
+persist.vendor.camera.is_mode=4 \
+persist.camera.llv.fuse=2
+
+# Expose aux camera for below packages
+PRODUCT_PROPERTY_OVERRIDES += \
+camera.aux.packagelist=org.lineageos.snap,com.google.android.GoogleCameraWide,com.android.camera \
+vendor.camera.aux.packagelist=org.lineageos.snap,com.google.android.GoogleCameraWide,com.android.camera
+
+# Whatsapp fix
+PRODUCT_PROPERTY_OVERRIDES += \
+camera.hal1.packagelist=org.thunderdog.challegram,com.instagram.android,com.whatsapp,com.gbwhatsapp \
+vendor.camera.hal1.packagelist=org.thunderdog.challegram,com.instagram.android,com.whatsapp,com.gbwhatsapp 
+
+
+#Temporal Noise Reduction
+persist.camera.tnr_cds=1
+persist.camera.tnr.video=1
+persist.vendor.camera.tnr.video=1
+persist.camera.tnr.preview=1
+persist.vendor.camera.tnr.preview=1
+persist.camera.tnr.snapshot=1
+persist.vendor.camera.tnr.snapshot=1
+persist.camera.llnoise=1
+persist.tnr.process.plates=1
+persist.vendor.tnr.process.plates=1
+persist.denoise.process.plates=1
+persist.vendor.denoise.process.plates=1
 
 # Cne
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -120,25 +174,24 @@ debug.enable.sglscale=1 \
 debug.gralloc.enable_fb_ubwc=1 \
 debug.mdpcomp.logs=0 \
 debug.sf.hw=0 \
-debug.sf.latch_unsignaled=0 \
+debug.sf.latch_unsignaled=1 \
+debug.cpurend.vsync=false \
 debug.sf.recomputecrop=0 \
-debug.sf.enable_gl_backpressure=1 \
 dev.pm.dyn_samplingrate=1 \
+persist.debug.wfd.enable=1 \
 persist.demo.hdmirotationlock=false \
 persist.hwc.enable_vds=1 \
 persist.hwc.mdpcomp.enable=true \
 ro.opengles.version=196610 \
 ro.qualcomm.cabl=0 \
 ro.sf.lcd_density=420 \
-debug.sdm.support_writeback=0 \
 ro.vendor.display.cabl=2 \
 sdm.debug.disable_skip_validate=1 \
-vendor.display.enable_default_color_mode=1 \
 vendor.display.disable_skip_validate=1 \
+vendor.display.enable_default_color_mode=1 \
 vendor.gralloc.enable_fb_ubwc=1 \
 persist.vendor.max.brightness=475 \
 debug.hwui.renderer=opengl
-
 
 # DPM
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -160,20 +213,6 @@ vendor.hw.fm.init=0
 # Frp
 PRODUCT_PROPERTY_OVERRIDES += \
 ro.frp.pst=/dev/block/bootdevice/by-name/config
-
-# HWUI
-PRODUCT_PROPERTY_OVERRIDES += \
-ro.hwui.texture_cache_size=72 \
-ro.hwui.layer_cache_size=48 \
-ro.hwui.r_buffer_cache_size=8 \
-ro.hwui.path_cache_size=32 \
-ro.hwui.gradient_cache_size=1 \
-ro.hwui.drop_shadow_cache_size=6 \
-ro.hwui.texture_cache_flushrate=0.4 \
-ro.hwui.text_small_cache_width=1024 \
-ro.hwui.text_small_cache_height=1024 \
-ro.hwui.text_large_cache_width=2048 \
-ro.hwui.text_large_cache_height=1024
 
 # LMKD
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -291,12 +330,13 @@ persist.sys.fflag.override.settings_network_and_internet_v2=true
 
 # SurfaceFlinger
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
-ro.surface_flinger.max_virtual_display_dimension=4096 \
-ro.surface_flinger.protected_contents=true \
-ro.surface_flinger.vsync_event_phase_offset_ns=2000000 \
-ro.surface_flinger.vsync_sf_event_phase_offset_ns=6000000 \
-ro.surface_flinger.use_color_management=true
+ro.surface_flinger.protected_contents=true
+
+PRODUCT_PROPERTY_OVERRIDES += \
+debug.sf.early_phase_offset_ns=1500000 \
+debug.sf.early_app_phase_offset_ns=1500000 \
+debug.sf.early_gl_phase_offset_ns=3000000 \
+debug.sf.early_gl_app_phase_offset_ns=15000000
 
 # Thermal configs path
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -317,6 +357,7 @@ sys.use_fifo_ui=1
 
 # Usb
 PRODUCT_PROPERTY_OVERRIDES += \
+persist.sys.usb.config=mtp,adb \
 persist.vendor.usb.config.extra=none
 
 # Wifi
@@ -327,6 +368,10 @@ wifi.interface=wlan0
 PRODUCT_PROPERTY_OVERRIDES += \
 persist.debug.wfd.enable=1 \
 persist.sys.wfd.virtual=0
+
+# Property to enable display default color mode
+PRODUCT_PROPERTY_OVERRIDES += \
+vendor.display.enable_default_color_mode=1
 
 # Unsorted properties
 PRODUCT_PROPERTY_OVERRIDES += \
