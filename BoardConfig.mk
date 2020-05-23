@@ -51,7 +51,6 @@ BOARD_KERNEL_CMDLINE += androidboot.usbconfigfs=true
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 2048
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 TARGET_KERNEL_SOURCE := kernel/xiaomi/daisy
 TARGET_KERNEL_VERSION := 4.9
@@ -128,6 +127,8 @@ ifeq ($(HOST_OS),linux)
     endif
   endif
 endif
+
+DONT_DEXPREOPT_PREBUILTS := true
 
 # Display
 TARGET_USES_ION := true
@@ -210,8 +211,11 @@ include device/qcom/sepolicy-legacy-um/sepolicy.mk
 
 # Sepolicy
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
-BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/public
+#BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/public
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+
+#SurfaceFlinger
+TARGET_USE_AOSP_SURFACEFLINGER := true
 
 # System As Root
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := true

@@ -19,15 +19,11 @@ $(call inherit-product, vendor/xiaomi/daisy/daisy-vendor.mk)
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 
-ifeq ($(CURRENT_BUILD_TYPE),gapps)
-    $(call inherit-product, vendor/google-customization/config.mk)
-endif
-
 # Set boot SPL
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # Overlays
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+DEVICE_PACKAGE_OVERLAYS += device/xiaomi/daisy/overlay
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -49,6 +45,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.bluetooth_le.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/native/data/etc/android.hardware.camera.front.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml \
+    frameworks/native/data/etc/android.hardware.camera.raw.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.raw.xml \
+    frameworks/native/data/etc/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml \
+    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.autofocus.xml \
     frameworks/native/data/etc/android.hardware.consumerir.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.consumerir.xml \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
@@ -185,8 +185,7 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-service \
     android.hardware.camera.provider@2.5 \
     vendor.qti.hardware.camera.device@1.0 \
-    vendor.qti.hardware.camera.postproc@1.0 \
-    Snap
+    vendor.qti.hardware.camera.postproc@1.0
 
 # Consumerir
 PRODUCT_PACKAGES += \
@@ -225,9 +224,6 @@ PRODUCT_PACKAGES += \
 # LiveDisplay
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay@2.0-service-sdm
-	
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/permissions/me.phh.treble.app.xml:system/etc/permissions/me.phh.treble.app.xml
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -375,8 +371,7 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service-qti \
-    android.hardware.power.stats@1.0-service.mock
+    android.hardware.power@1.2-service-qti
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml \
@@ -409,9 +404,6 @@ PRODUCT_PACKAGES += \
 # RenderScript HAL
 PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl
-
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/cts_pass.rc:system/etc/init/cts_pass.rc
 	
 # RIL
 PRODUCT_PACKAGES += \
@@ -440,6 +432,9 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     libcodec2_vndk.vendor \
     libcodec2_hidl@1.0.vendor
+
+#RRO
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += $(LOCAL_PATH)/overlay/packages/apps/Snap
 
 # Seccomp policy
 PRODUCT_COPY_FILES += \
@@ -477,6 +472,10 @@ PRODUCT_COPY_FILES += \
 # ThermalController app
 PRODUCT_PACKAGES += \
     ThermalController
+
+# Trust HAL
+PRODUCT_PACKAGES += \
+    vendor.lineage.trust@1.0-service
 
 # USB HAL
 PRODUCT_PACKAGES += \
@@ -521,6 +520,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:$(TARGET_COPY_OUT_SYSTEM)/etc/firmware/wlan/prima/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini
 
-# Wi-Fi Display
+# WFD
+PRODUCT_PACKAGES += \
+    libnl \
+    libwfdaac
+
 PRODUCT_BOOT_JARS += \
     WfdCommon

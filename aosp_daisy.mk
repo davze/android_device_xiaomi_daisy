@@ -19,7 +19,7 @@ TARGET_GAPPS_ARCH := arm64
 #TARGET_INCLUDE_STOCK_ARCORE := true
 TARGET_INCREMENTAL_BLOCK_BASED := true
 $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
-#$(call inherit-product, vendor/MiuiCamera/config.mk)
+$(call inherit-product, vendor/MiuiCamera/config.mk)
 
 # AtomOS stuff
 CUSTOM_BUILD_TYPE := OFFICIAL
