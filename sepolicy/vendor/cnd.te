@@ -1,3 +1,4 @@
 allow cnd hostapd:process { sigkill };
-allow cnd wifi_prop:file getattr;
-allow cnd wifi_prop:file open;
+allow cnd sysfs:file { open read };
+allow cnd wifi_prop:file read;
+allow cnd wifi_prop:file { getattr open };
