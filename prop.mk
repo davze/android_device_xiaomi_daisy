@@ -20,14 +20,9 @@ persist.audio.parameter.ce=0 \
 persist.dirac.acs.controller=qem \
 persist.dirac.acs.ignore_error=1 \
 persist.dirac.acs.storeSettings=1 \
-persist.vendor.audio.fluence.speaker=true \
-persist.vendor.audio.fluence.voicecall=true \
-persist.vendor.audio.fluence.voicerec=false \
 persist.vendor.audio.hw.binder.size_kbyte=1024 \
-persist.vendor.btstack.enable.splita2dp=false \
 persist.vendor.audio.speaker.prot.enable=false \
 ro.audio.soundfx.dirac=true \
-ro.vendor.audio.sdk.fluencetype=fluence \
 ro.vendor.audio.sdk.ssr=false \
 vendor.audio.dolby.ds2.enabled=false \
 vendor.audio.dolby.ds2.hardbypass=false \
@@ -52,6 +47,13 @@ vendor.voice.path.for.pcm.voip=true \
 vendor.voice.playback.conc.disabled=true \
 vendor.voice.record.conc.disabled=false \
 vendor.voice.voip.conc.disabled=true
+
+# Audio
+PRODUCT_PROPERTY_OVERRIDES += \
+persist.audio.fluence.speaker=true \
+persist.audio.fluence.voicecall=true \
+persist.audio.fluence.voicerec=false \
+ro.audio.sdk.fluencetype=none
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -182,6 +184,10 @@ persist.debug.wfd.enable=1 \
 persist.demo.hdmirotationlock=false \
 persist.hwc.enable_vds=1 \
 persist.hwc.mdpcomp.enable=true \
+persist.sys.wfd.virtual=0 \
+vendor.video.disable.ubwc=1\
+vendor.gralloc.disable_wb_ubwc=1 \
+persist.sys.wfd.nohdcp=1 \
 ro.opengles.version=196610 \
 ro.qualcomm.cabl=0 \
 ro.sf.lcd_density=420 \
@@ -366,8 +372,7 @@ wifi.interface=wlan0
 
 # Wifi-Display
 PRODUCT_PROPERTY_OVERRIDES += \
-persist.debug.wfd.enable=1 \
-persist.sys.wfd.virtual=0
+
 
 # Property to enable display default color mode
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -386,7 +391,6 @@ persist.mm.sta.enable=0 \
 persist.vendor.audio.speaker.prot.enable=false \
 persist.vendor.data.profile_update=true \
 persist.vendor.radio.prefer_spn=1 \
-ro.dalvik.vm.native.bridge=0 \
 ro.memperf.lib=libmemperf.so \
 ro.memperf.enable=false \
 ro.vendor.display.sensortype=2 \

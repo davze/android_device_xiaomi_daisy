@@ -15,3 +15,4 @@ allow hal_camera_default sysfs_kgsl:file { getattr read open };
 allow hal_camera_default vendor_default_prop:file r_file_perms;
 allow hal_camera_default vendor_default_prop:sock_file r_file_perms;
 allow hal_camera_default vendor_default_prop:property_service set;
+allow hal_camera_default default_prop:property_service set;
