@@ -15,9 +15,6 @@ $(call inherit-product, device/xiaomi/daisy/device.mk)
 
 # Inherit some common PixelExperience stuff.
 TARGET_BOOT_ANIMATION_RES := 1080
-#TARGET_GAPPS_ARCH := arm64
-#TARGET_INCLUDE_STOCK_ARCORE := true
-#TARGET_INCREMENTAL_BLOCK_BASED := true
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 $(call inherit-product, vendor/MiuiCamera/config.mk)
 

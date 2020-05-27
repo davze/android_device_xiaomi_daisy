@@ -24,7 +24,6 @@ BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += device/xiaomi/daisy/overlay
-DEVICE_PACKAGE_OVERLAYS += device/xiaomi/daisy/overlay-pe
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -220,7 +219,6 @@ PRODUCT_PACKAGES += \
 
 # Device-specific settings
 PRODUCT_PACKAGES += \
-    XiaomiParts \
     XiaomiDoze
 
 # LiveDisplay
