@@ -12,13 +12,13 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_o_mr1.mk
 # Inherit from daisy device
 $(call inherit-product, device/xiaomi/daisy/device.mk)
 
-# Inherit some common LineageOS stuff.
+# Inherit some common AICP stuff.
 TARGET_BOOT_ANIMATION_RES := 1080
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+$(call inherit-product, vendor/aicp/config/common_full_phone.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := daisy
-PRODUCT_NAME := lineage_daisy
+PRODUCT_NAME := aicp_daisy
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := Mi A2 Lite
 PRODUCT_MANUFACTURER := Xiaomi
