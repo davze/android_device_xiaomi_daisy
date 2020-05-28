@@ -16,14 +16,12 @@
 
 $(call inherit-product, vendor/xiaomi/daisy/daisy-vendor.mk)
 
-# Setup dalvik vm configs
-$(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
-
 # Set boot SPL
 BOOT_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += device/xiaomi/daisy/overlay
+DEVICE_PACKAGE_OVERLAYS += device/xiaomi/daisy/overlay-lineage
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -185,7 +183,8 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-service \
     android.hardware.camera.provider@2.5 \
     vendor.qti.hardware.camera.device@1.0 \
-    vendor.qti.hardware.camera.postproc@1.0
+    vendor.qti.hardware.camera.postproc@1.0 \
+	Snap
 
 # Consumerir
 PRODUCT_PACKAGES += \
@@ -469,6 +468,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
 
+# Verity
+PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/soc/7824900.sdhci/by-name/system
+PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/platform/soc/7824900.sdhci/by-name/vendor
+$(call inherit-product, build/target/product/verity.mk)
+
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
@@ -519,8 +523,3 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
-
-# Verity
-PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/soc/7824900.sdhci/by-name/system
-PRODUCT_VENDOR_VERITY_PARTITION := /dev/block/platform/soc/7824900.sdhci/by-name/vendor
-$(call inherit-product, build/target/product/verity.mk)

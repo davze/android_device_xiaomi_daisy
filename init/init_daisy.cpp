@@ -1,5 +1,6 @@
 /*
-   Copyright (c) 2014, The Linux Foundation. All rights reserved.
+   Copyright (c) 2016, The CyanogenMod Project
+   Copyright (C) 2019 The LineageOS Project.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
@@ -12,7 +13,6 @@
       with the distribution.
     * Neither the name of The Linux Foundation nor the names of its
       contributors may be used to endorse or promote products derived
-
       from this software without specific prior written permission.
    THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
    WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -27,37 +27,41 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
-#define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
-#include <sys/_system_properties.h>
+#include <sys/sysinfo.h>
 
-#include <android-base/properties.h>
-#include "property_service.h"
 #include "vendor_init.h"
+#include "property_service.h"
+
+char const *heapgrowthlimit;
+char const *heapminfree;
 
 using android::init::property_set;
 
-void property_override(char const prop[], char const value[])
+void check_device()
 {
-    prop_info *pi;
+    struct sysinfo sys;
 
-    pi = (prop_info*) __system_property_find(prop);
-    if (pi)
-        __system_property_update(pi, value, strlen(value));
-    else
-        __system_property_add(prop, strlen(prop), value, strlen(value));
-}
+    sysinfo(&sys);
 
-void property_override_dual(char const system_prop[], char const vendor_prop[],
-    char const value[])
-{
-    property_override(system_prop, value);
-    property_override(vendor_prop, value);
+    if (sys.totalram > 2048ull * 1024 * 1024) {
+        // from - Stock rom
+        heapgrowthlimit = "256m";
+        heapminfree = "4m";
+    } else {
+        // from - phone-xxhdpi-2048-dalvik-heap.mk
+        heapgrowthlimit = "192m";
+        heapminfree = "2m";
+   }
 }
 
 void vendor_load_properties()
 {
-    // fingerprint
-    property_override("ro.build.description", "sakura-user 9 PKQ1.180917.001 20.1.9 release-keys");
-    property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "google/flame/flame:10/QQ2A.200501.001.B2/6352890:user/release-keys");
+    check_device();
+
+    property_set("dalvik.vm.heapstartsize", "16m");
+    property_set("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
+    property_set("dalvik.vm.heapsize", "512m");
+    property_set("dalvik.vm.heaptargetutilization", "0.75");
+    property_set("dalvik.vm.heapminfree", heapminfree);
+    property_set("dalvik.vm.heapmaxfree", "8m");
 }

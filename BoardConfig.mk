@@ -48,7 +48,6 @@ BOARD_KERNEL_CMDLINE += androidboot.bootdevice=7824900.sdhci
 BOARD_KERNEL_CMDLINE += earlycon=msm_hsl_uart,0x78af000
 BOARD_KERNEL_CMDLINE += firmware_class.path=/vendor/firmware_mnt/image
 BOARD_KERNEL_CMDLINE += androidboot.usbconfigfs=true
-#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 2048
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
@@ -59,9 +58,6 @@ TARGET_KERNEL_CONFIG := daisy_defconfig
 
 # ANT
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
-
-# APEX image
-DEXPREOPT_GENERATE_APEX_IMAGE := true
 
 # Audio
 AUDIO_FEATURE_ENABLED_ANC_HEADSET := true
@@ -212,7 +208,6 @@ include device/qcom/sepolicy-legacy-um/sepolicy.mk
 
 # Sepolicy
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
-#BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/public
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
 #SurfaceFlinger
@@ -240,18 +235,15 @@ QCOM_HARDWARE_VARIANT := msm8996
 # Wi-Fi
 BOARD_HAS_QCOM_WLAN := true
 BOARD_USES_AOSP_WLAN_HAL := true
-#BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_qcwcn
 BOARD_WLAN_DEVICE := qcwcn
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_qcwcn
-#QC_WIFI_HIDL_FEATURE_DUAL_AP := true
 WIFI_DRIVER_FW_PATH_AP := "ap"
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
-#WIFI_HIDL_FEATURE_AWARE := true
 
 # Inherit from the proprietary version
 -include vendor/xiaomi/daisy/BoardConfigVendor.mk
